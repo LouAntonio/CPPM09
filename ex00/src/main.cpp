@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:44:48 by lantonio          #+#    #+#             */
-/*   Updated: 2025/11/27 11:04:34 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/11/27 12:46:14 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,24 @@ int main(int ac, char **av)
 {
 	if (ac == 2)
 	{
-		std::string	db = "data.csv";
-		std::string	lineToComp;
+		std::string	lineFromDB;
+		Btc	bitcoin;
 
-		std::ifstream toComp(av[1]);
-		if (!toComp.is_open()) {
+		std::ifstream db("data.csv");
+		if (!db.is_open()) {
 			std::cout << "Error while opening the file!" << std::endl;
 			return 0;
 		}
-		getline(toComp, lineToComp);
-		if (lineToComp != "date,exchange_rate")
+		getline(db, lineFromDB);
+		if (lineFromDB != "date,exchange_rate")
 		{
 			std::cout << "Invalid input file!" << std::endl;
 			return 1;
 		}
+		
+		const std::string a = "2021-02-22";
+		std::cout << bitcoin.parseDate(a) << std::endl;
+
 	} else
 		std::cout << "./btc [input file]" << std::endl;
 	(void)av;
