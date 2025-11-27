@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:00 by lantonio          #+#    #+#             */
-/*   Updated: 2025/11/27 12:45:35 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/11/27 14:33:22 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,11 @@ time_t	Btc::parseDate(const std::string &date) {
     t.tm_isdst = -1;
 
     return std::mktime(&t);
+}
+
+void    Btc::printmap(void) {
+    std::map<time_t, float>::iterator i = dates.begin();
+    std::map<time_t, float>::iterator j = dates.end();
+    while (i != j)
+        std::cout << i->first << " -> " << i->second << std::endl;
 }

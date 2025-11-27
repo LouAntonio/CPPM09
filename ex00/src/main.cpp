@@ -6,11 +6,16 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:44:48 by lantonio          #+#    #+#             */
-/*   Updated: 2025/11/27 12:46:14 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/11/27 14:41:34 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/BitcoinExchange.hpp"
+
+size_t	ft_split(std::string line, char c) {
+	size_t	pos = line.find(c);
+	return pos != std::string::npos ? pos : -1;
+}
 
 int main(int ac, char **av)
 {
@@ -30,9 +35,12 @@ int main(int ac, char **av)
 			std::cout << "Invalid input file!" << std::endl;
 			return 1;
 		}
-		
-		const std::string a = "2021-02-22";
-		std::cout << bitcoin.parseDate(a) << std::endl;
+
+		size_t pos;
+		while (getline(db, lineFromDB)) {
+			pos = ft_split(lineFromDB, ',');
+			std::cout << lineFromDB.substr(0, pos) << " | " << lineFromDB.substr(pos + 1) << std::endl;
+		}
 
 	} else
 		std::cout << "./btc [input file]" << std::endl;
