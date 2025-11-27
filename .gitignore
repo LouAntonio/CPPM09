@@ -42,6 +42,10 @@
 
 # executable
 *.out
+btc
 
 # vscode folder
 *.vscode
+
+# excel file
+data.csv
