@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:00 by lantonio          #+#    #+#             */
-/*   Updated: 2025/11/27 14:33:22 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:22:22 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ Btc &Btc::operator=(const Btc &src) {
 Btc::~Btc() {};
 
 void	Btc::push(time_t date, float value) {
-	this->dates[date] = value;
+	this->dates.insert(std::make_pair(date, value));
 }
 
 time_t	Btc::parseDate(const std::string &date) {
@@ -54,4 +54,16 @@ void    Btc::printmap(void) {
     std::map<time_t, float>::iterator j = dates.end();
     while (i != j)
         std::cout << i->first << " -> " << i->second << std::endl;
+}
+
+const char *Btc::badInput::what() const throw() {
+	return "bad input!";
+}
+
+const char *Btc::outOfLimits::what() const throw() {
+    return "out of integer limits!";
+}
+
+const char *Btc::nonPositive::what() const throw () {
+    return "not a positive number!";
 }
