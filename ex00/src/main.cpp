@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:44:48 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/01 14:00:51 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/01 14:06:54 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,37 +67,32 @@ int	ft_split(std::string line, char c) {
 	return static_cast<int>(line.find(c));
 }
 
-int	parse_db(Btc *db) {
+void	parse_db(Btc *db) {
 	std::string	date;
 	std::string	exchange;
 	std::string	lineFromDB;
 	std::ifstream dbFile("data.csv");
-	if (!dbFile.is_open()) {
-		std::cout << "Error while opening the file!" << std::endl;
-		return 0;
-	}
+
+	if (!dbFile.is_open())
+		std::runtime_error("error while opening the file!");
+
 	getline(dbFile, lineFromDB);
 	if (lineFromDB != "date,exchange_rate")
-	{
-		std::cout << "Invalid input file!" << std::endl;
-		return 0;
-	}
+		std::runtime_error("invalid input file!");
 
 	int pos;
 	while (getline(dbFile, lineFromDB)) {
 		pos = ft_split(lineFromDB, ',');
 		if (pos == -1)
-			std::cout << "Error: bad input!" << std::endl; //throw Btc::badInput();
+			throw Btc::badInput();
 		date = lineFromDB.substr(0, pos);
 		exchange = lineFromDB.substr(pos + 1);
 		if (!validateDate(date))
-			std::cout << "Error: invalid date format!" << std::endl; //throw std::runtime_error("invalid date format!");
+			throw std::runtime_error("invalid date format!");
 		if (!validateValue(exchange))
-			std::cout << "Error: invalid value format!" << std::endl; //throw std::runtime_error("invalid date format!");
+			throw std::runtime_error("invalid date format!");
 		db->push(db->parseDate(date), convertToDouble(exchange));
-		//std::cout << date << " | " << exchange << std::endl;
 	}
-	return 1;
 }
 
 int main(int ac, char **av)
@@ -106,9 +101,7 @@ int main(int ac, char **av)
 	{
 		Btc	db;
 		try {
-			if (!parse_db(&db))
-				return 1;
-			db.printmap();
+			parse_db(&db);
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
