@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:44:48 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/01 13:36:20 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/01 14:00:51 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,18 @@ int	validateValue(std::string value) {
 	char		*end_ptr;
 	double		toDouble = std::strtod(value.c_str(), &end_ptr);
 	if (errno == ERANGE)
-		return 0;
-	else if (end_ptr == value.c_str() || *value.c_str() == '\0')
-		return 0;
-	else if (*end_ptr != '\0' && *end_ptr != 'f')
-		return 0;
-	else if (*end_ptr != '\0' && *(end_ptr + 1) != '\0')
-		return 0;
+		throw std::runtime_error("value out of limits!");
+	else if (end_ptr == value.c_str() || *value.c_str() == '\0' || *end_ptr != '\0')
+		throw std::runtime_error("invalid value!");
 	else if (toDouble < 0)
-		return 0;
+		throw std::runtime_error("not a positive number!");
+	
 	return 1;
+}
+
+double	convertToDouble(std::string str) {
+	char		*end_ptr;
+	return std::strtod(str.c_str(), &end_ptr);
 }
 
 int	ft_split(std::string line, char c) {
@@ -66,9 +68,9 @@ int	ft_split(std::string line, char c) {
 }
 
 int	parse_db(Btc *db) {
-	std::string	lineFromDB;
 	std::string	date;
 	std::string	exchange;
+	std::string	lineFromDB;
 	std::ifstream dbFile("data.csv");
 	if (!dbFile.is_open()) {
 		std::cout << "Error while opening the file!" << std::endl;
@@ -92,9 +94,9 @@ int	parse_db(Btc *db) {
 			std::cout << "Error: invalid date format!" << std::endl; //throw std::runtime_error("invalid date format!");
 		if (!validateValue(exchange))
 			std::cout << "Error: invalid value format!" << std::endl; //throw std::runtime_error("invalid date format!");
-		std::cout << date << " | " << exchange << std::endl;
+		db->push(db->parseDate(date), convertToDouble(exchange));
+		//std::cout << date << " | " << exchange << std::endl;
 	}
-	(void)db;
 	return 1;
 }
 
@@ -103,17 +105,13 @@ int main(int ac, char **av)
 	if (ac == 2)
 	{
 		Btc	db;
-		Btc	input;
-
 		try {
 			if (!parse_db(&db))
 				return 1;
+			db.printmap();
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
-
-		
-
 	} else
 		std::cout << "./btc [input file]" << std::endl;
 	(void)av;
