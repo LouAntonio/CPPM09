@@ -6,13 +6,14 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:44:48 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/01 14:06:54 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/02 09:50:23 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/BitcoinExchange.hpp"
 
 int validateDate(const std::string &date) {
+	date = std::
     if (date.size() != 10)
         return 0;
 
@@ -55,7 +56,7 @@ int	validateValue(std::string value) {
 	else if (toDouble < 0)
 		throw std::runtime_error("not a positive number!");
 	
-	return 1;
+	return 1;\
 }
 
 double	convertToDouble(std::string str) {
@@ -68,6 +69,7 @@ int	ft_split(std::string line, char c) {
 }
 
 void	parse_db(Btc *db) {
+	int pos;
 	std::string	date;
 	std::string	exchange;
 	std::string	lineFromDB;
@@ -80,7 +82,6 @@ void	parse_db(Btc *db) {
 	if (lineFromDB != "date,exchange_rate")
 		std::runtime_error("invalid input file!");
 
-	int pos;
 	while (getline(dbFile, lineFromDB)) {
 		pos = ft_split(lineFromDB, ',');
 		if (pos == -1)
@@ -90,8 +91,42 @@ void	parse_db(Btc *db) {
 		if (!validateDate(date))
 			throw std::runtime_error("invalid date format!");
 		if (!validateValue(exchange))
-			throw std::runtime_error("invalid date format!");
+			throw std::runtime_error("invalid value!");
 		db->push(db->parseDate(date), convertToDouble(exchange));
+	}
+}
+
+void	parse_input_comparing(char *inputPath) {
+	int pos;
+	std::string	date;
+	std::string	value;
+	std::string	lineFromInput;
+	std::ifstream inputFile(inputPath);
+
+	if (!inputFile.is_open())
+	{
+		std::cerr << "Error while opening input file!" << std::endl;
+		return ;
+	}
+	getline(inputFile, lineFromInput);
+	if (lineFromInput != "date | value") {
+		std::cerr << "Invalid input file!" << std::endl;
+		return ;
+	}
+	while (getline(inputFile, lineFromInput)) {
+		try {
+			pos = ft_split(lineFromInput, '|');
+			if (pos == -1)
+				throw std::runtime_error("invalid line!");
+			date = lineFromInput.substr(0, pos);
+			value = lineFromInput.substr(pos + 1);
+			if (!validateDate(date))
+				throw std::runtime_error("invalid date format!");
+			validateValue(value);
+			
+		} catch (std::exception &e) {
+			std::cerr << "Error: " << e.what() << std::endl;
+		}
 	}
 }
 
@@ -102,6 +137,7 @@ int main(int ac, char **av)
 		Btc	db;
 		try {
 			parse_db(&db);
+			parse_input_comparing(av[1]);
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
