@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:00 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/03 12:20:46 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/03 12:45:15 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,68 +70,28 @@ std::map<time_t, double>::iterator Btc::findMap(time_t key) {
 	return this->dates.find(key);
 }
 
-// double Btc::findClosest(time_t inputTime) {
-// 	std::map<time_t, double>::iterator it = this->dates.lower_bound(inputTime);
-
-// 	if (it != this->dates.end() && it->first == inputTime)
-// 	{
-// 		time_t raw = it->first;
-// 		struct tm *t = localtime(&raw);
-
-// 		char buffer[20];
-// 		strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
-// 		std::cout << buffer << " | " << it->second << std::endl;
-// 	} else {
-// 		--it;
-// 		time_t raw = it->first;
-// 		struct tm *t = localtime(&raw);
-
-// 		char buffer[20];
-// 		strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
-// 		std::cout << buffer << " || " << it->second << std::endl;
-// 	}
-
-// 	return 1.0;
-// }
-
-double Btc::findClosest(time_t inputData)
+void Btc::findClosest(time_t inputData, double value)
 {
     std::map<time_t, double>::iterator it = this->dates.lower_bound(inputData);
 
     if (it != this->dates.end() && it->first == inputData) { // found the same data
-        time_t raw = it->first;
-		struct tm *t = localtime(&raw);
-
-		char buffer[20];
-		strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
-		std::cout << buffer << " | " << it->second << std::endl;
-		return 1.0;
+		getCounterValue(inputData, value, it->second);
+		return;
     }
 
     if (it == this->dates.end()) { // no data >= inputData, return the previous data
         --it;
-        time_t raw = it->first;
-		struct tm *t = localtime(&raw);
-
-		char buffer[20];
-		strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
-		std::cout << buffer << " | " << it->second << std::endl;
-		return 1.0;
+		getCounterValue(inputData, value, it->second);
+		return;
     }
 
     if (it == this->dates.begin()) { // no data is "before" inputData
-        std::cout << "No data before!" << std::endl;
-		return 1.0;
+        std::cout << "No data found!" << std::endl;
+		return;
     }
 
 	--it; // otherwise, use the previous data
-	time_t raw = it->first;
-	struct tm *t = localtime(&raw);
-
-	char buffer[20];
-	strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
-	std::cout << buffer << " | " << it->second << std::endl;
-    return 1.0;
+	getCounterValue(it->first, value, it->second);
 }
 
 void Btc::validateDate(const std::string &date) {
@@ -230,10 +190,21 @@ void	Btc::parse_input_comparing(char *inputPath) {
 			date = trim(lineFromInput.substr(0, pos));
 			validateDate(date);
 			value = convertToDouble(lineFromInput.substr(pos + 1));
-			//std::cout << value << " | " << findMap(parseDate(date))->second << std::endl;
-			findClosest(parseDate(date));
+			findClosest(parseDate(date), value);
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
 	}
+}
+
+void	Btc::getCounterValue(time_t date, double value, double exchange) {
+	time_t raw = date;
+	struct tm *t = localtime(&raw);
+
+	char buffer[20];
+	strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
+	if (exchange == 0)
+		std::cout << buffer << " => " << exchange << " = " << value << std::endl;
+	else
+		std::cout << buffer << " => " << exchange << " = " << value * exchange << std::endl;
 }
