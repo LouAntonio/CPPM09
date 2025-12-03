@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:00 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/03 12:49:28 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/03 13:12:59 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void Btc::findClosest(time_t inputData, double value)
     }
 
 	--it; // otherwise, use the previous data
-	getCounterValue(it->first, value, it->second);
+	getCounterValue(inputData, value, it->second);
 }
 
 void Btc::validateDate(const std::string &date) {
