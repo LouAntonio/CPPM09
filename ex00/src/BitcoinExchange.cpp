@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:00 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/03 10:33:13 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/03 12:20:46 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,69 +32,106 @@ void	Btc::push(time_t date, double value) {
 
 time_t	Btc::parseDate(const std::string &date) {
 	int year, month, day;
-    char dash1, dash2;
+	char dash1, dash2;
 
-    std::istringstream iss(date);
-    iss >> year >> dash1 >> month >> dash2 >> day;
+	std::istringstream iss(date);
+	iss >> year >> dash1 >> month >> dash2 >> day;
 
-    struct tm t;
-    std::memset(&t, 0, sizeof(t));
+	struct tm t;
+	std::memset(&t, 0, sizeof(t));
 
-    t.tm_year = year - 1900;
-    t.tm_mon  = month - 1;
-    t.tm_mday = day;
+	t.tm_year = year - 1900;
+	t.tm_mon  = month - 1;
+	t.tm_mday = day;
 
-    t.tm_isdst = -1;
+	t.tm_isdst = -1;
 
-    return std::mktime(&t);
+	return std::mktime(&t);
 }
 
 void Btc::printmap(void) {
-    std::map<time_t, double>::iterator it = dates.begin();
+	std::map<time_t, double>::iterator it = dates.begin();
 
-    while (it != dates.end())
-    {
-        time_t raw = it->first;
-        struct tm *t = localtime(&raw);
+	while (it != dates.end())
+	{
+		time_t raw = it->first;
+		struct tm *t = localtime(&raw);
 
-        char buffer[20];
-        strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
+		char buffer[20];
+		strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
 
-        std::cout << buffer << " -> " << it->second << std::endl;
+		std::cout << buffer << " -> " << it->second << std::endl;
 
-        ++it;
-    }
+		++it;
+	}
 }
 
 std::map<time_t, double>::iterator Btc::findMap(time_t key) {
-    return this->dates.find(key);
+	return this->dates.find(key);
 }
 
-double Btc::findClosest(time_t inputTime) {
-    std::map<time_t, double>::iterator it = this->dates.lower_bound(inputTime);
+// double Btc::findClosest(time_t inputTime) {
+// 	std::map<time_t, double>::iterator it = this->dates.lower_bound(inputTime);
 
-    // Caso 1: encontrou exatamente a data
-    if (it != this->dates.end() && it->first == inputTime)
-        return it->second;
+// 	if (it != this->dates.end() && it->first == inputTime)
+// 	{
+// 		time_t raw = it->first;
+// 		struct tm *t = localtime(&raw);
 
-    // Caso 2: nenhuma data >= inputTime → todas são menores
-    // Retornar a última (a mais próxima e anterior)
-    if (it == this->dates.end()) {
+// 		char buffer[20];
+// 		strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
+// 		std::cout << buffer << " | " << it->second << std::endl;
+// 	} else {
+// 		--it;
+// 		time_t raw = it->first;
+// 		struct tm *t = localtime(&raw);
+
+// 		char buffer[20];
+// 		strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
+// 		std::cout << buffer << " || " << it->second << std::endl;
+// 	}
+
+// 	return 1.0;
+// }
+
+double Btc::findClosest(time_t inputData)
+{
+    std::map<time_t, double>::iterator it = this->dates.lower_bound(inputData);
+
+    if (it != this->dates.end() && it->first == inputData) { // found the same data
+        time_t raw = it->first;
+		struct tm *t = localtime(&raw);
+
+		char buffer[20];
+		strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
+		std::cout << buffer << " | " << it->second << std::endl;
+		return 1.0;
+    }
+
+    if (it == this->dates.end()) { // no data >= inputData, return the previous data
         --it;
-        return it->second;
+        time_t raw = it->first;
+		struct tm *t = localtime(&raw);
+
+		char buffer[20];
+		strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
+		std::cout << buffer << " | " << it->second << std::endl;
+		return 1.0;
     }
 
-    // Caso 3: inputTime é menor que a menor data do mapa
-    // Não existe data anterior → não "aconteceu" nada ainda
-    if (it == this->dates.begin()) {
-        // não há datas passadas → depende do que você quer
-        // mas normalmente retorna vazio ou lança erro
-        return -1;  
+    if (it == this->dates.begin()) { // no data is "before" inputData
+        std::cout << "No data before!" << std::endl;
+		return 1.0;
     }
 
-    // Caso 4: existe uma anterior → essa é a data válida
-    --it;  // agora it aponta para a data imediatamente anterior
-    return it->second;
+	--it; // otherwise, use the previous data
+	time_t raw = it->first;
+	struct tm *t = localtime(&raw);
+
+	char buffer[20];
+	strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
+	std::cout << buffer << " | " << it->second << std::endl;
+    return 1.0;
 }
 
 void Btc::validateDate(const std::string &date) {
@@ -115,8 +152,14 @@ void Btc::validateDate(const std::string &date) {
 	int month = std::atoi(date.substr(5, 2).c_str());
 	int day   = std::atoi(date.substr(8, 2).c_str());
 
-	if (year < 0001 || year > 2025 || month < 1 || month > 12)
+	std::time_t now = std::time(NULL);
+	std::tm *lt = std::localtime(&now);
+	int currentYear = lt->tm_year + 1900;
+
+	if (year < 2009 || year > currentYear)
 		throw std::runtime_error("invalid year!");
+	if (month < 1 || month > 12)
+		throw std::runtime_error("invalid month!");
 
 	int daysInMonth[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
 	bool leap = false;
@@ -153,7 +196,7 @@ void	Btc::parse_db(void) {
 
 	getline(dbFile, lineFromDB);
 	if (lineFromDB != "date,exchange_rate")
-		std::runtime_error("invalid input file!");
+		std::runtime_error("invalid database file!");
 
 	while (getline(dbFile, lineFromDB)) {
 		pos = ft_split(lineFromDB, ',');
@@ -162,7 +205,7 @@ void	Btc::parse_db(void) {
 		date = trim(lineFromDB.substr(0, pos));
 		validateDate(date);
 		exchange = convertToDouble(trim(lineFromDB.substr(pos + 1)));
-		this->push(this->parseDate(date), exchange);
+		push(parseDate(date), exchange);
 	}
 }
 
@@ -174,15 +217,11 @@ void	Btc::parse_input_comparing(char *inputPath) {
 	std::ifstream inputFile(inputPath);
 
 	if (!inputFile.is_open())
-	{
-		std::cerr << "Error while opening input file!" << std::endl;
-		return ;
-	}
+		throw std::runtime_error("error while opening input file!");
+
 	getline(inputFile, lineFromInput);
-	if (lineFromInput != "date | value") {
-		std::cerr << "Invalid input file!" << std::endl;
-		return ;
-	}
+	if (lineFromInput != "date | value")
+		throw std::runtime_error("invalid input file!");
 	while (getline(inputFile, lineFromInput)) {
 		try {
 			pos = ft_split(lineFromInput, '|');
@@ -191,7 +230,8 @@ void	Btc::parse_input_comparing(char *inputPath) {
 			date = trim(lineFromInput.substr(0, pos));
 			validateDate(date);
 			value = convertToDouble(lineFromInput.substr(pos + 1));
-			std::cout << value << " | " << findMap(parseDate(date))->second << std::endl;
+			//std::cout << value << " | " << findMap(parseDate(date))->second << std::endl;
+			findClosest(parseDate(date));
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
