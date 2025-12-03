@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:03 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/03 10:15:34 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:32:25 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 #include <stdexcept>
 #include <cstdlib>
 
+int			ft_split(std::string line, char c);
+std::string	trim(const std::string str);
+
 
 class Btc {
 	private:
@@ -38,6 +41,11 @@ class Btc {
 		time_t								parseDate(const std::string &date);
 		void								printmap(void);
 		std::map<time_t, double>::iterator	findMap(time_t key);
+		double								findClosest(time_t inputTime);
+		void								validateDate(const std::string &date);
+		double								convertToDouble(std::string value);
+		void								parse_db(void);
+		void								parse_input_comparing(char *inputPath);
 		
 };
 
