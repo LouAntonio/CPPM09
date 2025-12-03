@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:03 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/03 12:38:27 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/03 12:48:16 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ class Btc {
 		Btc &operator=(const Btc &src);
 		~Btc();
 
+		int									size(void);
 		void								parse_db(void);
 		void								printmap(void);
 		std::map<time_t, double>::iterator	findMap(time_t key);

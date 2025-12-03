@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:44:48 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/03 10:32:19 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/03 13:00:58 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,17 @@ int main(int ac, char **av)
 		Btc	db;
 		try {
 			db.parse_db();
+			if (!db.size())
+			{
+				std::cout << "Impossible to compare input with database, because database is empty!" << std::endl;
+				return 0;
+			}
 			db.parse_input_comparing(av[1]);
+			return 1;
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
 	} else
 		std::cout << "./btc [input file]" << std::endl;
-	(void)av;
 	return 0;
 }

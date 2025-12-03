@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:00 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/03 12:45:15 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/03 12:49:28 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ Btc &Btc::operator=(const Btc &src) {
 };
 
 Btc::~Btc() {};
+
+int	Btc::size(void) {
+	return static_cast<int>(this->dates.size());
+}
 
 void	Btc::push(time_t date, double value) {
 	this->dates.insert(std::make_pair(date, value));
