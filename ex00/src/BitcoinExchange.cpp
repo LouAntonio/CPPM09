@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:00 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/01 14:00:40 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:16:52 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,19 @@ time_t	Btc::parseDate(const std::string &date) {
     return std::mktime(&t);
 }
 
-void    Btc::printmap(void) {
-    std::map<time_t, double>::iterator i = dates.begin();
-    std::map<time_t, double>::iterator j = dates.end();
-    while (i != j)
+void Btc::printmap(void) {
+    std::map<time_t, double>::iterator it = dates.begin();
+
+    while (it != dates.end())
     {
-        std::cout << i->first << " -> " << i->second << std::endl;
-        i++;
+        time_t raw = it->first;
+        struct tm *t = localtime(&raw);
+
+        char buffer[20];
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
+
+        std::cout << buffer << " -> " << it->second << std::endl;
+
+        ++it;
     }
-}
-
-const char *Btc::badInput::what() const throw() {
-	return "bad input!";
-}
-
-const char *Btc::outOfLimits::what() const throw() {
-    return "out of integer limits!";
-}
-
-const char *Btc::nonPositive::what() const throw () {
-    return "not a positive number!";
 }
