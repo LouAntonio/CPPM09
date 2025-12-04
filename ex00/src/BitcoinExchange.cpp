@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:00 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/03 13:12:59 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:04:37 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,8 +178,10 @@ void	Btc::parse_input_comparing(char *inputPath) {
 	std::string	date;
 	double		value;
 	std::string	lineFromInput;
+	
+	check_extension(inputPath);
+	
 	std::ifstream inputFile(inputPath);
-
 	if (!inputFile.is_open())
 		throw std::runtime_error("error while opening input file!");
 
