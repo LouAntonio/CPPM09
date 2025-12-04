@@ -48,4 +48,5 @@ btc
 *.vscode
 
 # excel file
-data.csv
+*.csv
+*.txt

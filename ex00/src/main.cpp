@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:44:48 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/04 11:04:54 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:06:12 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	check_extension(char *str) {
 		throw std::runtime_error("input file does not have an extension!");
 	if (ext.substr(0, pos) != "txt")
 		throw std::runtime_error("input file with invalid extension!");
-	std::cout << "Extensao = " << ext.substr(0, pos) << (ext.substr(0, pos) != "txt") << std::endl;
 }
 
 int	ft_split(std::string line, char c) {
