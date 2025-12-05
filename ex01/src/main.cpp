@@ -6,11 +6,22 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 12:01:51 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/05 12:02:29 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/05 14:37:30 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/RPN.hpp"
+
+bool isNumeric(const std::string str)
+{
+	if (str.empty())
+		return false;
+
+	for (size_t i = 0; i < str.size(); ++i)
+		if (!std::isdigit(str[i]))
+			return false;
+	return true;
+}
 
 int	main(int ac, char **av)
 {
@@ -18,7 +29,8 @@ int	main(int ac, char **av)
 	{
 		RNP	rnp;
 		try {
-			rnp.build(av[1]);
+			rnp.parseInput(av[1]);
+			rnp.operate(av[1]);
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
