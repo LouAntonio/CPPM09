@@ -43,6 +43,7 @@
 # executable
 *.out
 btc
+RPN
 
 # vscode folder
 *.vscode
