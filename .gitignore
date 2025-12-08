@@ -44,6 +44,7 @@
 *.out
 btc
 RPN
+PmergeMe
 
 # vscode folder
 *.vscode
