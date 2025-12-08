@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:44 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/08 12:30:06 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/08 15:07:59 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,7 @@ int main(int ac, char **av) {
 		try {
 			PmergeMe	pmergeme;
 			pmergeme.parseInput(av + 1);
-			std::cout << "Vector = ";
-			pmergeme.printVet(pmergeme.vet);
-			std::cout << std::endl;
-
-			std::cout << "Deque = ";
-			pmergeme.printDeq(pmergeme.deq);
-			std::cout << std::endl;
+			
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}

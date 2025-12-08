@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:50 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/08 12:31:22 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/08 15:38:34 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,18 @@ void	PmergeMe::printDeq(std::deque<int> deq) {
 	 while (i != deq.end())
 	 	std::cout << " " << *i++;
 	std::cout << std::endl;
+}
+
+void	PmergeMe::pairedSortVet(void) {
+	int	a, b = 0;
+	while (vet.size()) {
+		a = vet.at(0);
+		vet.pop_back();
+		if (vet.size())
+		{
+			b = vet.at(0);
+			vet.pop_back();
+		}
+		std::cout << "A = " << a << " B = " << b << std::endl;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:45:06 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/08 12:29:05 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/08 15:08:27 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ class PmergeMe {
 	std::deque<int>		deq;
 	std::vector<int>	ordered_vet;
 	std::deque<int>		ordered_deq;
+	std::vector<int>	unordered_vet;
+	std::deque<int>		unordered_deq;
 		PmergeMe() {};
 		PmergeMe(const PmergeMe &src) { *this = src; };
 		PmergeMe &operator=(const PmergeMe &src) {
@@ -42,6 +44,8 @@ class PmergeMe {
 		void	parseInput(char **av);
 		void	printVet(std::vector<int> vet);
 		void	printDeq(std::deque<int> deq);
+
+		void	pairedSortVet(void);
 };
 
 #endif
