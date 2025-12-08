@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 12:01:51 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/05 14:37:30 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/05 15:14:19 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ int	main(int ac, char **av)
 {
 	if (ac == 2)
 	{
-		RNP	rnp;
+		RPN	rpn;
 		try {
-			rnp.parseInput(av[1]);
-			rnp.operate(av[1]);
+			rpn.operate(av[1]);
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
 	} else
-		std::cerr << "./RNP \"args\"" << std::endl;
+		std::cerr << "./RPN \"args\"" << std::endl;
 	return 0;
 }

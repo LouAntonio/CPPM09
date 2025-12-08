@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:32:46 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/05 14:34:22 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/05 15:14:08 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,17 @@
 
 bool		isNumeric(const std::string str);
 
-class RNP : public std::stack<int> {
-	private:
-		int	qtdOperators;
+class RPN : public std::stack<int> {
 	public:
-		RNP() {}
-		RNP (const RNP &src) : std::stack<int>(src) {}
-		RNP &operator=(const RNP &src) {
+		RPN() {}
+		RPN (const RPN &src) : std::stack<int>(src) {}
+		RPN &operator=(const RPN &src) {
 			if (this != &src)
 				std::stack<int>::operator=(src);
 			return *this;
 		}
-		~RNP() {}
+		~RPN() {}
 
-		void	parseInput(std::string input);
 		void	operate(std::string input);
 		int		makeOperation(int a, int b, std::string _operator);
 };
