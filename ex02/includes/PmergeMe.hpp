@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:45:06 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/08 15:08:27 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/09 09:55:24 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,17 @@ bool	isNumeric(const std::string str);
 
 class PmergeMe {
 	public:
-	std::vector<int>	vet;
-	std::deque<int>		deq;
-	std::vector<int>	ordered_vet;
-	std::deque<int>		ordered_deq;
-	std::vector<int>	unordered_vet;
-	std::deque<int>		unordered_deq;
+		int					inputSize;
+		std::vector<int>	vet;
+		std::vector<int>	shortest_vet;
+		std::vector<int>	longest_vet;
+		std::vector<int>	ordered_vet;
+		
+		std::deque<int>		deq;
+		std::vector<int>	longest_deq;
+		std::deque<int>		longest_deq;
+		std::deque<int>		ordered_deq;
+
 		PmergeMe() {};
 		PmergeMe(const PmergeMe &src) { *this = src; };
 		PmergeMe &operator=(const PmergeMe &src) {
