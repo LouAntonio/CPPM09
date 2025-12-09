@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:45:06 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/09 10:32:55 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/09 11:54:56 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ extern int hasLast;
 extern int lastVet;
 extern int lastDeq;
 
-bool	isNumeric(const std::string str);
+bool						isNumeric(const std::string str);
 
 class PmergeMe {
 	public:
 		int					inputSize;
+		std::vector<int>	sequence;
 
 		std::vector<int>	vet;
 		std::vector<int>	shortest_vet;
@@ -51,12 +52,14 @@ class PmergeMe {
 		}
 		~PmergeMe() {};
 
-		void	parseInput(char **av);
-		void	printVet(std::vector<int> vet);
-		void	printDeq(std::deque<int> deq);
+		void				parseInput(char **av);
+		void				printVet(std::vector<int> vet);
+		void				printDeq(std::deque<int> deq);
 
-		void	pairedSortVet(void);
-		void	pairedSortDeq(void);
+		void				pairedSortVet(void);
+		void				pairedSortDeq(void);
+
+		std::vector<int>	jacobsthal(int n);
 };
 
 #endif

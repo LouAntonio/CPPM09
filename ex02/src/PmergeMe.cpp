@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:50 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/09 11:17:28 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/09 11:53:45 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,14 @@ void	PmergeMe::pairedSortVet(void) {
 
 void	PmergeMe::pairedSortDeq(void) {
 	
+}
+
+std::vector<int> PmergeMe::jacobsthal(int n) {
+	std::vector<int> sequence(n+1);
+	sequence[0] = 0;
+	sequence[1] = 1;
+	for(int i = 2; i <= n; i++) {
+		sequence[i] = sequence[i-1] + 2*sequence[i-2];
+	}
+	return sequence;
 }
