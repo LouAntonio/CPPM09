@@ -6,11 +6,15 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:44 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/09 09:44:50 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/09 11:11:13 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/PmergeMe.hpp"
+
+int hasLast;
+int lastVet;
+int lastDeq;
 
 bool isNumeric(const std::string str)
 {

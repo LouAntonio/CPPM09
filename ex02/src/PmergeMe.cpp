@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:50 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/09 09:55:52 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/09 11:17:28 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,18 @@ void	PmergeMe::pairedSortVet(void) {
 		if (vet.size()) {
 			b = vet.at(0);
 			vet.erase(vet.begin());
-
-		}
-		std::cout << "A = " << a << " B = " << b << std::endl;
+			if (a < b)
+				(shortest_vet.push_back(a), longest_vet.push_back(b));
+			else
+				(shortest_vet.push_back(b), longest_vet.push_back(a));
+			std::cout << "Pair | A = " << a << " B = " << b << std::endl;
+		} else
+			(hasLast = 1 ,lastVet = a, std::cout << "A = " << a << std::endl);
 	}
+	hasLast ? std::cout << "LastVet = " << lastVet << std::endl : std::cout << std::endl ;
+	std::sort(longest_vet.begin(), longest_vet.end());
+}
+
+void	PmergeMe::pairedSortDeq(void) {
+	
 }
