@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:50 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/10 12:23:50 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/10 13:27:24 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void PmergeMe::sortVets(std::vector<int> &c) {
 	int		stash = 0;
 	if (_size % 2 != 0) {
 		isOdd = true;
-        stash = c.back();
-        c.pop_back();
+		stash = c.back();
+		c.pop_back();
 	}
 
 	std::vector<int> mainChain;
-    std::vector<int> pendings;    
-    mainChain.reserve(_size / 2);
-    pendings.reserve(_size / 2);
+	std::vector<int> pendings;    
+	mainChain.reserve(_size / 2);
+	pendings.reserve(_size / 2);
 
 	for (size_t i = 0; i < c.size(); i += 2) {
 		int a = c[i];
@@ -76,42 +76,36 @@ void PmergeMe::sortVets(std::vector<int> &c) {
 
 	std::vector<int> result = mainChain;
 
-	if (_pSize == 0) {
-		if (isOdd) {
-			std::vector<int>::iterator i = std::lower_bound(result.begin(), result.end(), stash);
-			result.insert(i, stash);
+	if (_pSize > 0) {
+		std::vector<int> jac = jacobsthal(_pSize);
+		std::vector<char> used(_pSize, 0); // char em C++98, usado como bool
+		std::vector<int> insertion_order;
+		insertion_order.reserve(_pSize);
+
+		for (int i = 1; i < (int)jac.size(); ++i) {
+			int jval = jac[i];
+			if (jval <= 0) continue;
+			if (jval > _pSize) break;
+			int idx = jval - 1;
+			if (idx >= 0 && idx < _pSize && !used[idx]) {
+				used[idx] = 1;
+				insertion_order.push_back(idx);
+			}
 		}
-		return;
-	}
 
-	std::vector<int> jac = jacobsthal(_pSize);
-	std::vector<int> insertion_order;
-
-	for (int i = 1; i < (int)jac.size(); ++i) {
-		if (jac[i] <= _pSize) {
-			int index = jac[i]-1;
-			bool exists = false;
-			for (int j = 0; j < (int)insertion_order.size(); ++j)
-				if (insertion_order[j] == index) { exists = true; break; }
-			if (!exists) insertion_order.push_back(index);
+		for (int k = 0; k < (int)insertion_order.size(); ++k) {
+			int idx = insertion_order[k];
+			if (idx < 0 || idx >= _pSize) continue;
+			int element = pendings[idx];
+			std::vector<int>::iterator pos = std::lower_bound(result.begin(), result.end(), element);
+			result.insert(pos, element);
 		}
-	}
 
-	for (int i = 0; i < (int)insertion_order.size(); ++i) {
-		int index = insertion_order[i];
-		int element = pendings[index];
-		std::vector<int>::iterator it = std::lower_bound(result.begin(), result.end(), element);
-		result.insert(it, element);
-	}
-
-	for (int i = 0; i < _pSize; ++i) {
-		bool already_inserted = false;
-		for (int j = 0; j < (int)insertion_order.size(); ++j)
-			if (insertion_order[j] == i) { already_inserted = true; break; }
-		if (!already_inserted) {
+		for (int i = 0; i < _pSize; ++i) {
+			if (used[i]) continue;
 			int element = pendings[i];
-			std::vector<int>::iterator it = std::lower_bound(result.begin(), result.end(), element);
-			result.insert(it, element);
+			std::vector<int>::iterator pos = std::lower_bound(result.begin(), result.end(), element);
+			result.insert(pos, element);
 		}
 	}
 

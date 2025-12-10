@@ -6,7 +6,7 @@
 #    By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 10:44:03 by lantonio          #+#    #+#              #
-#    Updated: 2025/12/10 12:03:34 by lantonio         ###   ########.fr        #
+#    Updated: 2025/12/10 12:56:41 by lantonio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS		=	./src/main.cpp \
 
 CXX			= c++
 
-FLAGS		= -Wall -Wextra -Werror -std=c++98
+FLAGS		= -Wall -Wextra -Werror -std=c++98 -g
 
 OBJS		= $(SRCS:.cpp=.o)
 
