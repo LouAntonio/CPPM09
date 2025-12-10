@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:50 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/09 11:53:45 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/10 12:23:50 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,50 +31,102 @@ void	PmergeMe::parseInput(char **av) {
 	}
 }
 
-void	PmergeMe::printVet(std::vector<int> vet) {
-	 std::vector<int>::iterator	i = vet.begin();
-	 while (i != vet.end())
-	 	std::cout << " " << *i++;
+void	PmergeMe::printContainer(std::vector<int> c) {
+	std::vector<int>::iterator	i = c.begin();
+	while (i != c.end())
+	 	std::cout << *i++ << " ";
 	std::cout << std::endl;
 }
 
-void	PmergeMe::printDeq(std::deque<int> deq) {
-	 std::deque<int>::iterator	i = deq.begin();
-	 while (i != deq.end())
-	 	std::cout << " " << *i++;
-	std::cout << std::endl;
-}
+void PmergeMe::sortVets(std::vector<int> &c) {
+	int		_size = (int)c.size();
 
-void	PmergeMe::pairedSortVet(void) {
-	int	a, b;
-	while (vet.size()) {
-		a = vet.at(0);
-		vet.erase(vet.begin());
-		if (vet.size()) {
-			b = vet.at(0);
-			vet.erase(vet.begin());
-			if (a < b)
-				(shortest_vet.push_back(a), longest_vet.push_back(b));
-			else
-				(shortest_vet.push_back(b), longest_vet.push_back(a));
-			std::cout << "Pair | A = " << a << " B = " << b << std::endl;
-		} else
-			(hasLast = 1 ,lastVet = a, std::cout << "A = " << a << std::endl);
+	if (_size <= 1) return;
+
+	bool	isOdd = false;
+	int		stash = 0;
+	if (_size % 2 != 0) {
+		isOdd = true;
+        stash = c.back();
+        c.pop_back();
 	}
-	hasLast ? std::cout << "LastVet = " << lastVet << std::endl : std::cout << std::endl ;
-	std::sort(longest_vet.begin(), longest_vet.end());
-}
 
-void	PmergeMe::pairedSortDeq(void) {
-	
+	std::vector<int> mainChain;
+    std::vector<int> pendings;    
+    mainChain.reserve(_size / 2);
+    pendings.reserve(_size / 2);
+
+	for (size_t i = 0; i < c.size(); i += 2) {
+		int a = c[i];
+		int b = c[i+1];
+
+		if (a < b) {
+			pendings.push_back(a);
+			mainChain.push_back(b);
+		} else {
+			pendings.push_back(b);
+			mainChain.push_back(a);
+		}
+	}
+
+
+	sortVets(mainChain);
+
+	int _pSize = pendings.size();
+
+	std::vector<int> result = mainChain;
+
+	if (_pSize == 0) {
+		if (isOdd) {
+			std::vector<int>::iterator i = std::lower_bound(result.begin(), result.end(), stash);
+			result.insert(i, stash);
+		}
+		return;
+	}
+
+	std::vector<int> jac = jacobsthal(_pSize);
+	std::vector<int> insertion_order;
+
+	for (int i = 1; i < (int)jac.size(); ++i) {
+		if (jac[i] <= _pSize) {
+			int index = jac[i]-1;
+			bool exists = false;
+			for (int j = 0; j < (int)insertion_order.size(); ++j)
+				if (insertion_order[j] == index) { exists = true; break; }
+			if (!exists) insertion_order.push_back(index);
+		}
+	}
+
+	for (int i = 0; i < (int)insertion_order.size(); ++i) {
+		int index = insertion_order[i];
+		int element = pendings[index];
+		std::vector<int>::iterator it = std::lower_bound(result.begin(), result.end(), element);
+		result.insert(it, element);
+	}
+
+	for (int i = 0; i < _pSize; ++i) {
+		bool already_inserted = false;
+		for (int j = 0; j < (int)insertion_order.size(); ++j)
+			if (insertion_order[j] == i) { already_inserted = true; break; }
+		if (!already_inserted) {
+			int element = pendings[i];
+			std::vector<int>::iterator it = std::lower_bound(result.begin(), result.end(), element);
+			result.insert(it, element);
+		}
+	}
+
+	if (isOdd) {
+		std::vector<int>::iterator i = std::lower_bound(result.begin(), result.end(), stash);
+		result.insert(i, stash);
+	}
+	ordered_vet = result;
 }
 
 std::vector<int> PmergeMe::jacobsthal(int n) {
 	std::vector<int> sequence(n+1);
 	sequence[0] = 0;
 	sequence[1] = 1;
-	for(int i = 2; i <= n; i++) {
+	for(int i = 2; i <= n; i++)
 		sequence[i] = sequence[i-1] + 2*sequence[i-2];
-	}
 	return sequence;
 }

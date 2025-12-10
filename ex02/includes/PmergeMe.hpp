@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:45:06 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/09 11:54:56 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/10 12:23:56 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 #include <deque>
 #include <vector>
 
-extern int hasLast;
 extern int lastVet;
 extern int lastDeq;
 
@@ -31,17 +30,10 @@ bool						isNumeric(const std::string str);
 class PmergeMe {
 	public:
 		int					inputSize;
-		std::vector<int>	sequence;
 
 		std::vector<int>	vet;
-		std::vector<int>	shortest_vet;
-		std::vector<int>	longest_vet;
 		std::vector<int>	ordered_vet;
-		
 		std::deque<int>		deq;
-		std::vector<int>	shortest_deq;
-		std::deque<int>		longest_deq;
-		std::deque<int>		ordered_deq;
 
 		PmergeMe() {};
 		PmergeMe(const PmergeMe &src) { *this = src; };
@@ -53,11 +45,10 @@ class PmergeMe {
 		~PmergeMe() {};
 
 		void				parseInput(char **av);
-		void				printVet(std::vector<int> vet);
-		void				printDeq(std::deque<int> deq);
 
-		void				pairedSortVet(void);
-		void				pairedSortDeq(void);
+		void				printContainer(std::vector<int> c);
+
+		void				sortVets(std::vector<int> &vet);
 
 		std::vector<int>	jacobsthal(int n);
 };

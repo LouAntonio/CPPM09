@@ -6,13 +6,12 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:44 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/09 11:57:06 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/10 12:23:53 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/PmergeMe.hpp"
 
-int hasLast;
 int lastVet;
 int lastDeq;
 
@@ -34,7 +33,8 @@ int main(int ac, char **av) {
 		try {
 			PmergeMe	pmergeme;
 			pmergeme.parseInput(av + 1);
-			pmergeme.pairedSortVet();
+			pmergeme.sortVets(pmergeme.vet);
+			pmergeme.printContainer(pmergeme.ordered_vet);
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
