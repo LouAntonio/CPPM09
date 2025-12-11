@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:50 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/11 10:35:55 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/11 11:59:36 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ void	PmergeMe::printContainer(std::vector<int> c) {
 void PmergeMe::sortVets(std::vector<int> &c) {
 	int		_size = (int)c.size();
 
-	if (_size <= 1) return;
+	if (_size <= 1) {
+        ordered_vet = c;
+        return;
+    }
 
 	bool	isOdd = false;
 	int		stash = 0;
@@ -60,23 +63,20 @@ void PmergeMe::sortVets(std::vector<int> &c) {
 		a = c[i];
 		b = c[i+1];
 
-		if (a < b) {
-			pendings.push_back(a);
-			mainChain.push_back(b);
-		} else {
-			pendings.push_back(b);
-			mainChain.push_back(a);
-		}
+		if (a < b)
+            std::swap(a, b);
+        mainChain.push_back(a);
+        pendings.push_back(b);
 	}
 	sortVets(mainChain);
 
-	int                 _pSize = pendings.size();
-	std::vector<int>    result = mainChain;
+	int                 _pSize = (int)pendings.size();
+	std::vector<int>    result = ordered_vet;
 
 	if (_pSize > 0) {
-		std::vector<int> jac = jacobsthal(_pSize);
-		std::vector<char> used(_pSize, 0);
-		std::vector<int> insertion_order;
+		std::vector<int>    jac = jacobsthal(_pSize);
+		std::vector<char>   used(_pSize, 0);
+		std::vector<int>    insertion_order;
 		insertion_order.reserve(_pSize);
 
 		for (int i = 1; i < (int)jac.size(); ++i) {
@@ -110,6 +110,7 @@ void PmergeMe::sortVets(std::vector<int> &c) {
 		std::vector<int>::iterator i = std::lower_bound(result.begin(), result.end(), stash);
 		result.insert(i, stash);
 	}
+
 	ordered_vet = result;
 }
 
