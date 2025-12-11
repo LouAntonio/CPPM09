@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:50 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/11 10:27:29 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/11 10:35:55 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void PmergeMe::sortVets(std::vector<int> &c) {
 		c.pop_back();
 	}
 
-	std::vector<int> mainChain;
-	std::vector<int> pendings;    
+    int                 a, b;
+	std::vector<int>    mainChain, pendings;
 	mainChain.reserve(_size / 2);
 	pendings.reserve(_size / 2);
 
 	for (size_t i = 0; i < c.size(); i += 2) {
-		int a = c[i];
-		int b = c[i+1];
+		a = c[i];
+		b = c[i+1];
 
 		if (a < b) {
 			pendings.push_back(a);
@@ -68,17 +68,14 @@ void PmergeMe::sortVets(std::vector<int> &c) {
 			mainChain.push_back(a);
 		}
 	}
-
-
 	sortVets(mainChain);
 
-	int _pSize = pendings.size();
-
-	std::vector<int> result = mainChain;
+	int                 _pSize = pendings.size();
+	std::vector<int>    result = mainChain;
 
 	if (_pSize > 0) {
 		std::vector<int> jac = jacobsthal(_pSize);
-		std::vector<char> used(_pSize, 0); // char em C++98, usado como bool
+		std::vector<char> used(_pSize, 0);
 		std::vector<int> insertion_order;
 		insertion_order.reserve(_pSize);
 
