@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:44 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/10 12:23:53 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:40:36 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int main(int ac, char **av) {
 		try {
 			PmergeMe	pmergeme;
 			pmergeme.parseInput(av + 1);
-			pmergeme.sortVets(pmergeme.vet);
+			pmergeme.sortVet(pmergeme.vet);
 			pmergeme.printContainer(pmergeme.ordered_vet);
+			std::cout << "---" << std::endl;
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}

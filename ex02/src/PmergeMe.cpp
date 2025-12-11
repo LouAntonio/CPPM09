@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:50 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/11 12:17:53 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:39:34 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	PmergeMe::parseInput(char **av) {
 	std::string	token;
 	int			value;
 
-	inputSize = 0;
 	while (*av) {
 		if (isNumeric(*av)) {
 			value = std::atoi(*av);
@@ -24,21 +23,13 @@ void	PmergeMe::parseInput(char **av) {
 				throw std::runtime_error("negative number => " + std::string(*av));
 			vet.push_back(value);
 			deq.push_back(value);
-			inputSize++;
 		} else
 			throw std::runtime_error("invalid token => " + std::string(*av));
 		av++;
 	}
 }
 
-void	PmergeMe::printContainer(std::vector<int> c) {
-	std::vector<int>::iterator	i = c.begin();
-	while (i != c.end())
-	 	std::cout << *i++ << " ";
-	std::cout << std::endl;
-}
-
-void PmergeMe::sortVets(std::vector<int> &c) {
+void PmergeMe::sortVet(std::vector<int> &c) {
 	int		_size = (int)c.size();
 
 	if (_size <= 1) {
@@ -68,7 +59,7 @@ void PmergeMe::sortVets(std::vector<int> &c) {
         mainChain.push_back(a);
         pendings.push_back(b);
 	}
-	sortVets(mainChain);
+	sortVet(mainChain);
 
 	int                 _pSize = (int)pendings.size();
 	std::vector<int>    result = ordered_vet;
