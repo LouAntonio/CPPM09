@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:50 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/12 10:54:08 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/12 11:53:43 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,37 @@
 void	PmergeMe::parseInput(char **av) {
 	std::string	token;
 	int			value;
+	std::string	splited;
+	
 
 	len = 0;
 	while (*av) {
-		if (isNumeric(*av)) {
-			value = std::atoi(*av);
-			if (value < 0)
-				throw std::runtime_error("negative number => " + std::string(*av));
-			original_vet.push_back(value);
-			original_deq.push_back(value);
-		} else
-			throw std::runtime_error("invalid token => " + std::string(*av));
+		std::istringstream split(*av);
+		while (split >> token) {
+			if (isNumeric(token)) {
+				value = std::atoi(token.c_str());
+				if (value < 0)
+					throw std::runtime_error("negative number => " + std::string(token));
+				original_vet.push_back(value);
+				original_deq.push_back(value);
+			} else
+				throw std::runtime_error("invalid token => " + std::string(*av));
+			len++;
+		}
 		av++;
-		len++;
 	}
+	if (len < 2)
+		throw std::runtime_error("invalid number of arguments\n./PmergeMe [args]");
 }
 
 void	PmergeMe::printInput(char **av) {
-	while (*av)
-		std::cout << *av++ << " ";
+	std::string	token;
+
+	while (*av) {
+		std::istringstream split(*av++);
+		while (split >> token)
+			std::cout << token << " ";
+	}
 	std::cout << std::endl;
 }
 

@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:44 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/12 10:57:09 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/12 11:52:41 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,38 +29,36 @@ bool isNumeric(const std::string str)
 }
 
 int main(int ac, char **av) {
-	if (ac > 2) {
-		try {
-			PmergeMe		pmergeme;
-			struct timeval	start, end;
-			long			seconds, usec;
-			double			total;
+	try {
+		PmergeMe		pmergeme;
+		struct timeval	start, end;
+		long			seconds, usec;
+		double			total;
 
-			pmergeme.parseInput(av + 1);
+		pmergeme.parseInput(av + 1);
 
-			gettimeofday(&start, NULL);
-			pmergeme.sortVet(pmergeme.original_vet);
-			gettimeofday(&end, NULL);
-			seconds = end.tv_sec  - start.tv_sec;
-			usec = end.tv_usec - start.tv_usec;
-			total = seconds * 1000000 + usec;
-			std::cout << "Before: ";
-			pmergeme.printInput(av + 1);
-			std::cout << "After:  ";
-			pmergeme.printContainer(pmergeme.ordered_vet);
-			std::cout << "Time to process a range of " << pmergeme.len << " elements with std::vector " << total << " ms" << std::endl;
-			
-			gettimeofday(&start, NULL);
-			pmergeme.sortDeq(pmergeme.original_deq);
-			gettimeofday(&end, NULL);
-			seconds = end.tv_sec  - start.tv_sec;
-			usec = end.tv_usec - start.tv_usec;
-			total = seconds * 1000000 + usec;
-			std::cout << "Time to process a range of " << pmergeme.len << " elements with std::dequee " << total << " ms" << std::endl;
-		} catch (std::exception &e) {
-			std::cerr << "Error: " << e.what() << std::endl;
-		}
-	} else
-		std::cout << "./PmergeMe [args]" << std::endl;
+		gettimeofday(&start, NULL);
+		pmergeme.sortVet(pmergeme.original_vet);
+		gettimeofday(&end, NULL);
+		seconds = end.tv_sec  - start.tv_sec;
+		usec = end.tv_usec - start.tv_usec;
+		total = seconds * 1000000 + usec;
+		std::cout << "Before: ";
+		pmergeme.printInput(av + 1);
+		std::cout << "After:  ";
+		pmergeme.printContainer(pmergeme.ordered_vet);
+		std::cout << "Time to process a range of " << pmergeme.len << " elements with std::vector " << total << " ms" << std::endl;
+		
+		gettimeofday(&start, NULL);
+		pmergeme.sortDeq(pmergeme.original_deq);
+		gettimeofday(&end, NULL);
+		seconds = end.tv_sec  - start.tv_sec;
+		usec = end.tv_usec - start.tv_usec;
+		total = seconds * 1000000 + usec;
+		std::cout << "Time to process a range of " << pmergeme.len << " elements with std::dequee " << total << " ms" << std::endl;
+	} catch (std::exception &e) {
+		std::cerr << "Error: " << e.what() << std::endl;
+	}
+	(void)ac;
 	return 0;
 }
