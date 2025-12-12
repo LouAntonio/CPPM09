@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:45:06 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/12 10:35:54 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/12 10:53:43 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ bool						isNumeric(const std::string str);
 
 class PmergeMe {
 	public:
+		int					len;
 		std::vector<int>	original_vet;
 		std::vector<int>	ordered_vet;
 		std::deque<int>		original_deq;
@@ -45,6 +46,7 @@ class PmergeMe {
 		~PmergeMe() {};
 
 		void				parseInput(char **av);
+		void				printInput(char **av);
 		std::vector<int>	jacobsthalVet(int n);
 		std::deque<int>		jacobsthalDeq(int n);
 

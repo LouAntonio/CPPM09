@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:50 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/12 10:38:36 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/12 10:54:08 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	PmergeMe::parseInput(char **av) {
 	std::string	token;
 	int			value;
 
+	len = 0;
 	while (*av) {
 		if (isNumeric(*av)) {
 			value = std::atoi(*av);
@@ -26,7 +27,14 @@ void	PmergeMe::parseInput(char **av) {
 		} else
 			throw std::runtime_error("invalid token => " + std::string(*av));
 		av++;
+		len++;
 	}
+}
+
+void	PmergeMe::printInput(char **av) {
+	while (*av)
+		std::cout << *av++ << " ";
+	std::cout << std::endl;
 }
 
 void PmergeMe::sortVet(std::vector<int> &vet) {
