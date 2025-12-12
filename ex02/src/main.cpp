@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:44 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/11 15:20:07 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/12 10:42:40 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,31 @@ bool isNumeric(const std::string str)
 int main(int ac, char **av) {
 	if (ac > 2) {
 		try {
-			PmergeMe	pmergeme;
+			PmergeMe		pmergeme;
+			struct timeval	start, end;
+			long			seconds, usec;
+			double			total;
+
 			pmergeme.parseInput(av + 1);
+
+			gettimeofday(&start, NULL);
 			pmergeme.sortVet(pmergeme.original_vet);
+			gettimeofday(&end, NULL);
+			seconds = end.tv_sec  - start.tv_sec;
+			usec = end.tv_usec - start.tv_usec;
+			total = seconds * 1000000 + usec;
 			pmergeme.printContainer(pmergeme.ordered_vet);
+			std::cout << "Time to process a range of x elements " << total << " ms" << std::endl;
+			
 			std::cout << "---" << std::endl;
+			gettimeofday(&start, NULL);
 			pmergeme.sortDeq(pmergeme.original_deq);
+			gettimeofday(&end, NULL);
+			seconds = end.tv_sec  - start.tv_sec;
+			usec = end.tv_usec - start.tv_usec;
+			total = seconds * 1000000 + usec;
 			pmergeme.printContainer(pmergeme.ordered_deq);
+			std::cout << "Time to process a range of x elements " << total << " ms" << std::endl;
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;
 		}

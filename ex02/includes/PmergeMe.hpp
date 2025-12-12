@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:45:06 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/11 15:09:44 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/12 10:35:54 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <deque>
 #include <vector>
+#include <sys/time.h>
 
 extern int lastVet;
 extern int lastDeq;
