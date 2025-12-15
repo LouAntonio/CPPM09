@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 12:01:51 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/05 15:14:19 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/15 10:16:18 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 bool isNumeric(const std::string str)
 {
+	size_t	i = 0;
 	if (str.empty())
 		return false;
-
-	for (size_t i = 0; i < str.size(); ++i)
+	if (str[i] == '-' || str[i] == '+') i = 1;
+	if (str[i] == '\0') return false;
+	for (; i < str.size(); ++i)
 		if (!std::isdigit(str[i]))
 			return false;
 	return true;
