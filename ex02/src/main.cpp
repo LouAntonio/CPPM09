@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:44 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/12 11:52:41 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/15 14:17:57 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int main(int ac, char **av) {
 		pmergeme.printInput(av + 1);
 		std::cout << "After:  ";
 		pmergeme.printContainer(pmergeme.ordered_vet);
-		std::cout << "Time to process a range of " << pmergeme.len << " elements with std::vector " << total << " ms" << std::endl;
+		//std::cout << "Time to process a range of " << pmergeme.len << " elements with std::vector " << total << " ms" << std::endl;
 		
 		gettimeofday(&start, NULL);
 		pmergeme.sortDeq(pmergeme.original_deq);
@@ -55,6 +55,8 @@ int main(int ac, char **av) {
 		seconds = end.tv_sec  - start.tv_sec;
 		usec = end.tv_usec - start.tv_usec;
 		total = seconds * 1000000 + usec;
+		std::cout << "After:  ";
+		pmergeme.printContainer(pmergeme.ordered_deq);
 		std::cout << "Time to process a range of " << pmergeme.len << " elements with std::dequee " << total << " ms" << std::endl;
 	} catch (std::exception &e) {
 		std::cerr << "Error: " << e.what() << std::endl;
