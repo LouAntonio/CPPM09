@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:00 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/04 11:04:37 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/15 11:40:37 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,8 @@ void Btc::findClosest(time_t inputData, double value)
 		return;
     }
 
-    if (it == this->dates.begin()) { // no data is "before" inputData
-        std::cout << "No data found!" << std::endl;
-		return;
-    }
+    if (it == this->dates.begin())
+		throw std::runtime_error("date not found!");
 
 	--it; // otherwise, use the previous data
 	getCounterValue(inputData, value, it->second);
@@ -116,12 +114,6 @@ void Btc::validateDate(const std::string &date) {
 	int month = std::atoi(date.substr(5, 2).c_str());
 	int day   = std::atoi(date.substr(8, 2).c_str());
 
-	std::time_t now = std::time(NULL);
-	std::tm *lt = std::localtime(&now);
-	int currentYear = lt->tm_year + 1900;
-
-	if (year < 2009 || year > currentYear)
-		throw std::runtime_error("invalid year!");
 	if (month < 1 || month > 12)
 		throw std::runtime_error("invalid month!");
 
@@ -135,7 +127,7 @@ void Btc::validateDate(const std::string &date) {
 		throw std::runtime_error("invalid day in date!");
 }
 
-double	Btc::convertToDouble(std::string value) {
+double	Btc::convertToDouble(std::string value, bool isInput) {
 	errno = 0;
 	char		*end_ptr;
 	double		toDouble = std::strtod(value.c_str(), &end_ptr);
@@ -145,6 +137,8 @@ double	Btc::convertToDouble(std::string value) {
 		throw std::runtime_error("invalid value!");
 	else if (toDouble < 0)
 		throw std::runtime_error("not a positive number!");
+	else if (toDouble > 1000 && isInput)
+		throw std::runtime_error("value greater then 1000!");
 	return toDouble;
 }
 
@@ -168,7 +162,7 @@ void	Btc::parse_db(void) {
 			throw std::runtime_error("bad input!");
 		date = trim(lineFromDB.substr(0, pos));
 		validateDate(date);
-		exchange = convertToDouble(trim(lineFromDB.substr(pos + 1)));
+		exchange = convertToDouble(trim(lineFromDB.substr(pos + 1)), false);
 		push(parseDate(date), exchange);
 	}
 }
@@ -195,7 +189,7 @@ void	Btc::parse_input_comparing(char *inputPath) {
 				throw std::runtime_error("invalid line!");
 			date = trim(lineFromInput.substr(0, pos));
 			validateDate(date);
-			value = convertToDouble(lineFromInput.substr(pos + 1));
+			value = convertToDouble(lineFromInput.substr(pos + 1), true);
 			findClosest(parseDate(date), value);
 		} catch (std::exception &e) {
 			std::cerr << "Error: " << e.what() << std::endl;

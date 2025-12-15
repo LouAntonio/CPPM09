@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:03 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/04 10:23:33 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/15 11:38:43 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class Btc {
 		std::map<time_t, double>::iterator	findMap(time_t key);
 		void								findClosest(time_t inputData, double value);
 		void								push(time_t date, double value);
-		double								convertToDouble(std::string value);
+		double								convertToDouble(std::string value, bool isInput);
 		time_t								parseDate(const std::string &date);
 		void								validateDate(const std::string &date);
 		void								parse_input_comparing(char *inputPath);
