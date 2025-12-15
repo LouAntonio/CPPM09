@@ -6,13 +6,15 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:50 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/12 11:53:43 by lantonio         ###   ########.fr       */
+/*   Updated: 2025/12/15 12:24:31 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/PmergeMe.hpp"
 
 void	PmergeMe::parseInput(char **av) {
+	char		*end;
+	long		tmpValue;
 	std::string	token;
 	int			value;
 	std::string	splited;
@@ -23,11 +25,18 @@ void	PmergeMe::parseInput(char **av) {
 		std::istringstream split(*av);
 		while (split >> token) {
 			if (isNumeric(token)) {
-				value = std::atoi(token.c_str());
+				end = NULL;
+				tmpValue = std::strtol(token.c_str(), &end, 10);
+				if (*end != '\0')
+					throw std::runtime_error("invalid token => " + token);
+				if (tmpValue > INT_MAX || tmpValue < INT_MIN)
+					throw std::runtime_error("value out of int limits => " + token);
+				value = static_cast<int>(tmpValue);
 				if (value < 0)
 					throw std::runtime_error("negative number => " + std::string(token));
 				original_vet.push_back(value);
 				original_deq.push_back(value);
+				std::cout << "Value = " << value << std::endl;
 			} else
 				throw std::runtime_error("invalid token => " + std::string(*av));
 			len++;
@@ -171,6 +180,9 @@ void PmergeMe::sortDeq(std::deque<int> &deq) {
 				insertion_order.push_back(idx);
 			}
 		}
+
+		std::deque<int>::iterator p = std::lower_bound(result.begin(), result.end(), pendings[0]);
+		result.insert(p, pendings[0]);
 
 		for (int k = 0; k < (int)insertion_order.size(); ++k) {
 			int idx = insertion_order[k];
