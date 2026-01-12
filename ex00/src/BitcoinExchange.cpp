@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:00 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/15 11:40:37 by lantonio         ###   ########.fr       */
+/*   Updated: 2026/01/12 10:06:44 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,8 @@ void	Btc::getCounterValue(time_t date, double value, double exchange) {
 
 	char buffer[20];
 	strftime(buffer, sizeof(buffer), "%Y-%m-%d", t);
+	std::cout << std::fixed << std::setprecision(2);
+
 	if (exchange == 0)
 		std::cout << buffer << " => " << exchange << " = " << value << std::endl;
 	else

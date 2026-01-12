@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:35:03 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/15 11:38:43 by lantonio         ###   ########.fr       */
+/*   Updated: 2026/01/12 10:03:38 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <stdexcept>
 #include <cstdlib>
 #include <algorithm>
+#include <iomanip>
 
 std::string									trim(const std::string str);
 void										check_extension(char *str);
