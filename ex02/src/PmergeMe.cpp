@@ -6,11 +6,23 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:50 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/15 14:20:39 by lantonio         ###   ########.fr       */
+/*   Updated: 2026/01/12 14:32:40 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/PmergeMe.hpp"
+
+PmergeMe::PmergeMe() {};
+
+PmergeMe::PmergeMe(const PmergeMe &src) { *this = src; };
+
+PmergeMe& PmergeMe::operator=(const PmergeMe &src) {
+
+	if (this != &src)
+		(original_vet = src.original_vet, original_deq = src.original_deq, ordered_vet = src.ordered_vet, ordered_deq = src.ordered_deq);
+	return *this;
+}
+PmergeMe::~PmergeMe() {};
 
 void	PmergeMe::parseInput(char **av) {
 	char		*end;

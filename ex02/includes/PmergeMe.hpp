@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:45:06 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/15 10:34:02 by lantonio         ###   ########.fr       */
+/*   Updated: 2026/01/12 14:33:17 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,10 @@ class PmergeMe {
 		std::deque<int>		original_deq;
 		std::deque<int>		ordered_deq;
 
-		PmergeMe() {};
-		PmergeMe(const PmergeMe &src) { *this = src; };
-		PmergeMe &operator=(const PmergeMe &src) {
-			if (this != &src)
-				(original_vet = src.original_vet, original_deq = src.original_deq, ordered_vet = src.ordered_vet, ordered_deq = src.ordered_deq);
-			return *this;
-		}
-		~PmergeMe() {};
+		PmergeMe();
+		PmergeMe(const PmergeMe &src);
+		PmergeMe &operator=(const PmergeMe &src);
+		~PmergeMe();
 
 		void				parseInput(char **av);
 		void				printInput(char **av);

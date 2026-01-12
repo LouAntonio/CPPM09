@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:32:46 by lantonio          #+#    #+#             */
-/*   Updated: 2026/01/12 10:10:29 by lantonio         ###   ########.fr       */
+/*   Updated: 2026/01/12 14:27:14 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,10 @@ bool		isNumeric(const std::string str);
 
 class RPN : public std::stack<int> {
 	public:
-		RPN() {}
-		RPN (const RPN &src) : std::stack<int>(src) {}
-		RPN &operator=(const RPN &src) {
-			if (this != &src)
-				std::stack<int>::operator=(src);
-			return *this;
-		}
-		~RPN() {}
+		RPN();
+		RPN (const RPN &src);
+		RPN &operator=(const RPN &src);
+		~RPN();
 
 		void	operate(std::string input);
 		int		makeOperation(int a, int b, std::string _operator);

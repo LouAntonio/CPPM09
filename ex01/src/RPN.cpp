@@ -6,11 +6,23 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:32:43 by lantonio          #+#    #+#             */
-/*   Updated: 2026/01/12 10:24:04 by lantonio         ###   ########.fr       */
+/*   Updated: 2026/01/12 14:31:31 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/RPN.hpp"
+
+RPN::RPN() {}
+
+RPN::RPN (const RPN &src) : std::stack<int>(src) {}
+
+RPN& RPN::operator=(const RPN& src) {
+	if (this != &src)
+		std::stack<int>::operator=(src);
+	return *this;
+}
+
+RPN::~RPN() {}
 
 void RPN::operate(const std::string input)
 {

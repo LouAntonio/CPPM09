@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:44:44 by lantonio          #+#    #+#             */
-/*   Updated: 2026/01/12 10:27:23 by lantonio         ###   ########.fr       */
+/*   Updated: 2026/01/12 14:33:48 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int main(int ac, char **av) {
 		long			seconds, usec;
 		double			total;
 
-		pmergeme.parseInput(av + 1);
-
+		
 		gettimeofday(&start, NULL);
+		pmergeme.parseInput(av + 1);
 		pmergeme.sortVet(pmergeme.original_vet);
 		gettimeofday(&end, NULL);
 		seconds = end.tv_sec  - start.tv_sec;
@@ -50,6 +50,7 @@ int main(int ac, char **av) {
 		std::cout << "Time to process a range of " << pmergeme.len << " elements with std::vector " << total << " ms" << std::endl;
 		
 		gettimeofday(&start, NULL);
+		pmergeme.parseInput(av + 1);
 		pmergeme.sortDeq(pmergeme.original_deq);
 		gettimeofday(&end, NULL);
 		seconds = end.tv_sec  - start.tv_sec;
