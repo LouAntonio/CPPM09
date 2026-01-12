@@ -6,7 +6,7 @@
 /*   By: lantonio <lantonio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 11:32:46 by lantonio          #+#    #+#             */
-/*   Updated: 2025/12/15 10:33:20 by lantonio         ###   ########.fr       */
+/*   Updated: 2026/01/12 10:10:29 by lantonio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <exception>
 #include <sstream>
 #include <cstdlib>
+#include <climits>
 
 bool		isNumeric(const std::string str);
 
