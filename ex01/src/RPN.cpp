@@ -62,24 +62,25 @@ void RPN::operate(const std::string input)
 	std::cout << top() << std::endl;
 }
 
-int		RPN::makeOperation(int a, int b, std::string _operator) {
+int RPN::makeOperation(int a, int b, const std::string _operator)
+{
+	long long result;
+
 	if (_operator == "+")
+		result = static_cast<long long>(a) + b;
+	else if (_operator == "-")
+		result = static_cast<long long>(a) - b;
+	else if (_operator == "*")
+		result = static_cast<long long>(a) * b;
+	else if (_operator == "/")
 	{
-		if (a <= (INT_MAX - b))
-			throw std::runtime_error("result out of int limits!");
-		return a + b;
+		if (b == 0)
+			throw std::runtime_error("impossible to divide by zero!");
+		result = static_cast<long long>(a) / b;
 	}
-	if (_operator == "-")
-	{
-		if (b < 0 && a > INT_MAX + b)
-			throw std::runtime_error("result out of int limits!");
-		return a - b;
-	}
-	if (_operator == "*")
-	{
-		if (a > (INT_MAX / b))
-			throw std::runtime_error("result out of int limits!");
-		return a * b;
-	}
-	return a / b;
+
+	if (result > INT_MAX || result < INT_MIN)
+		throw std::runtime_error("result out of int limits!");
+
+	return static_cast<int>(result);
 }
