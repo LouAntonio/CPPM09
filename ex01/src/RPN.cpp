@@ -64,7 +64,7 @@ void RPN::operate(const std::string input)
 
 int RPN::makeOperation(int a, int b, const std::string _operator)
 {
-	long long result;
+	long long result = 0;
 
 	if (_operator == "+")
 		result = static_cast<long long>(a) + b;
